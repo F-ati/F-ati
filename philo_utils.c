@@ -75,3 +75,51 @@ int	ft_atoi(char *str)
 		handle_error_and_exit(str);
 	return ((int)(r));
 }
+
+long get_time_in_units( int units)
+{
+	struct timeval tv;
+	int ret = gettimeofday(&tv,NULL);
+	if (ret != 0)
+		exit(EXIT_FAILURE); // don't forget the remove exit;
+	if(units == 0)// second;
+	{
+		return(tv.tv_sec + (tv.tv_usec / 1000000));
+	}
+	else if ( units == 1) // millisecond;
+	{
+		return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	}
+	else if (units == 2) // microsecond;
+	{
+		return((tv.tv_sec * 1000000) + tv.tv_usec);
+	}
+	else
+		exit(EXIT_FAILURE);
+	return(1337);
+}
+
+void pricise_usleep(t_data *data , long usec)
+{
+	long start;
+	long elapsed;
+	long rem;
+
+	start = get_time_in_units(2);
+	while( get_time_in_units(2) - start < usec)
+	{
+		if(simulation_finished(data))
+			break;
+		elapsed = get_time_in_units(2) - start;
+		rem = usec - elapsed;
+		// to get spinlock threshold;
+		if( rem > 1000)
+			usleep(usec/2);
+		else
+		{
+			// 	SPINLOCK;
+			while(get_time_in_units(2) - start < usec)
+				;
+		}
+	}
+}

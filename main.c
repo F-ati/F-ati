@@ -21,7 +21,7 @@ int verify_args(int ac , char *av[])
 		printf("philo: usage: ./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]\n");
 		return(-7);
 	}
-    while(av[i] != NULL)
+    while(av[i] != NULL) 
     {
         arr[i - 1] = ft_atoi(av[i]);
         if(check_is_number(av[i]) == 0 )
@@ -49,6 +49,10 @@ int verify_args(int ac , char *av[])
 
 int main(int ac , char *av[])
 {
+    t_data data;
     if (verify_args(ac , av) < 0 )
         return(1);
+    initialize_data(&data,av);
+    dinner_start(&data);
+
 }

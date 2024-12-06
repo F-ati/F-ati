@@ -13,40 +13,64 @@
 #include "philo.h"
 #include <unistd.h>
 
-int meal = 0;
-pthread_mutex_t mutex;
-void *fatima1()
+void assign_forks(t_data *data , t_philo philo, int philo_position)
+{
+    philo.first_fork = &data->forks[(philo_position + 1) % data->nb_of_philo];
+    philo.second_fork = &data->forks[philo_position ];
+
+    if(philo.id % 2 == 0)
+    {
+        philo.first_fork = &data->forks[philo_position];
+        philo.second_fork = &data->forks[(philo_position + 1) % data->nb_of_philo];
+    }
+    
+}
+
+void init_philo(t_data *data)
 {
     int i = 0;
-    while (i < 10000000)
+    while(i < data->nb_of_philo)
     {
-        pthread_mutex_lock(&mutex);
-        meal ++;
-        pthread_mutex_unlock(&mutex);
-
-         i++;
-
+        data->philo[i].id = i + 1;
+        data->philo[i].full = false;
+        data->philo[i].meals_counter = 0;
+        assign_forks(data,data->philo[i], i);
+        i++;
     }
-   
+}
+
+void init_forks(t_data *data)
+{
+    int i = 0;
+    while(i < data->nb_of_philo)
+    {
+        pthread_mutex_init(&data->forks[i].fork,NULL);
+        data->forks[i].fork_id = i;
+        i++;
+    }
 }
 
 
-// int main()
-// {
-//    pthread_t t1;
-//    pthread_t t2;
-//    pthread_mutex_init(&mutex,NULL);
-//    if (pthread_create(&t1,NULL,fatima1,NULL) != 0)
-//         return(3);
+void initialize_data(t_data *data,char **av)
+{
+    data->nb_of_philo = ft_atoi(av[1]);
+    data->time_to_die = ft_atoi(av[2]) * 1000;
+    data->time_to_eat = ft_atoi(av[3]) * 1000;
+    data->time_to_sleep = ft_atoi(av[4]) * 1000;
+    if(av[5] != NULL)
+        data->nb_of_meals = ft_atoi(av[5]);
+    else
+        data->nb_of_meals = -1;
+    data->end_simulation = false;
+    data->all_threads_ready = false;
+    data->philo = malloc(sizeof(t_philo) * data->nb_of_philo);
+    if(data->philo ==   NULL)
+        exit(EXIT_FAILURE);
+     pthread_mutex_init(&data->data_metex,NULL); 
+    data->forks = malloc(sizeof(t_forks) * data->nb_of_philo);
+    if(data->forks == NULL)
+        exit(EXIT_FAILURE);
+    init_forks(data);
+    init_philo(data);
 
-//    if(pthread_create(&t2,NULL,fatima1,NULL) != 0 )
-//         return(3);
-//    if (pthread_join(t1,NULL) != 0)
-//         return(3);
-//    if (pthread_join(t2,NULL) != 0)
-//         return(3);
-   
-//    pthread_mutex_destroy(&mutex);
-//    printf("%d\n",meal);
-   
-// }
+}
