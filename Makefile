@@ -4,7 +4,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror 
 
-SRC =  main.c philo_utils.c philo.c dinner.c philo_utils2.c
+SRC =  main.c philo_utils.c philo.c dinner.c philo_utils2.c write.c
 
 OBJ = $(SRC:.c=.o)
 

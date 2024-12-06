@@ -36,6 +36,7 @@ typedef struct s_philo
     long last_meals_time;
     t_forks *first_fork;
     t_forks *second_fork;
+    pthread_mutex_t philo_mutex;//usefull for race_condition;
     pthread_t thread_id; // a philo is a thread;
 
 }t_philo;
@@ -51,6 +52,7 @@ typedef struct s_data
     bool end_simulation ;// a philo dies or all philo full;
     bool all_threads_ready;
     pthread_mutex_t data_metex; // avoid race while reading from table;
+    pthread_mutex_t write_mutex;
     t_forks *forks;
     t_philo *philo;
 
@@ -70,5 +72,6 @@ void set_bool(pthread_mutex_t *mutex, bool *dest , bool value);
 void wait_all_threads(t_data *data);
 long get_time_in_units( int units);
 void pricise_usleep(t_data *data , long usec);
+void write_data(t_data *data, int action , bool debug);
 
 #endif

@@ -34,6 +34,7 @@ void init_philo(t_data *data)
         data->philo[i].id = i + 1;
         data->philo[i].full = false;
         data->philo[i].meals_counter = 0;
+        pthread_mutex_init(&data->philo->philo_mutex,NULL);
         assign_forks(data,data->philo[i], i);
         i++;
     }
@@ -66,7 +67,8 @@ void initialize_data(t_data *data,char **av)
     data->philo = malloc(sizeof(t_philo) * data->nb_of_philo);
     if(data->philo ==   NULL)
         exit(EXIT_FAILURE);
-     pthread_mutex_init(&data->data_metex,NULL); 
+     pthread_mutex_init(&data->data_metex,NULL);
+     pthread_mutex_init(&data->write_mutex,NULL); 
     data->forks = malloc(sizeof(t_forks) * data->nb_of_philo);
     if(data->forks == NULL)
         exit(EXIT_FAILURE);
