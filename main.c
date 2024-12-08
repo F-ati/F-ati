@@ -49,10 +49,22 @@ int verify_args(int ac , char *av[])
 
 int main(int ac , char *av[])
 {
-    t_data data;
+    t_data *data;
+    pthread_mutex_t mutex;
+    pthread_mutex_t *forks;
+    pthread_t *philo;
+
     if (verify_args(ac , av) < 0 )
         return(1);
-    initialize_data(&data,av);
-    dinner_start(&data);
+    if (allocate_data(&forks,&philo,&data , av) == -1)
+    {
+        // move the all malloc her;
+        printf("Error: Memory allocation failed\n");
+        return(1);
+    }
+    initialize_data(data,av,ac ,&mutex);
+
+
+    
 
 }

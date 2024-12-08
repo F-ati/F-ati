@@ -104,12 +104,13 @@ void pricise_usleep(t_data *data , long usec)
 	long start;
 	long elapsed;
 	long rem;
+	(void)data;
 
 	start = get_time_in_units(2);
 	while( get_time_in_units(2) - start < usec)
 	{
-		if(simulation_finished(data))
-			break;
+		// if(simulation_finished(data))
+		// 	break;
 		elapsed = get_time_in_units(2) - start;
 		rem = usec - elapsed;
 		// to get spinlock threshold;
