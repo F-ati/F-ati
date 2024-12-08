@@ -33,7 +33,7 @@ int verify_args(int ac , char *av[])
 
         i++;
     }
-    if(arr[0] < 0 || arr[0] >= 200)
+    if(arr[0] < 0 || arr[0] >= 2000)
     {
         printf("philo: invalid input: %d: The number of philosophers must be less than 201.\n" ,arr[0]);
         return(-7);
@@ -63,8 +63,17 @@ int main(int ac , char *av[])
         return(1);
     }
     initialize_data(data,av,ac ,&mutex);
-
-
+    if(initialize_mutex(data,forks,&mutex) == -1)
+    {
+        free_data(data,forks,philo);
+        destroy_mutexes(*data,forks,&mutex); // 3lax tartib and how its *data;
+        return(1);
+    }
+    create_threads(data,philo,forks);
+    check_philo_death(data);
+    wait_threads(*data, philo);
+    free_data(data,forks,philo);
+    destroy_mutexes(*data,forks,&mutex);
     
 
 }

@@ -39,6 +39,8 @@ typedef struct s_data
 	long	last_meal_time;
 	struct timeval	start_time;
 	pthread_mutex_t	*multi_lock;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
     t_args args;
 }t_data;
 
@@ -50,7 +52,16 @@ void initialize_data(t_data *data,char **av , int ac ,pthread_mutex_t *mutex);
 
 long get_time_in_units( int units);
 void pricise_usleep(t_data *data , long usec);
-void write_data(t_data *data, int action , bool debug);
 long	get_timestamp_in_ms(struct timeval start_time);
+int  initialize_mutex(t_data *data,pthread_mutex_t *forks,pthread_mutex_t *mutex);
+void	free_data(t_data *data, pthread_mutex_t *forks, pthread_t *philos);
+void	  destroy_mutexes(t_data data, pthread_mutex_t *forks,
+		pthread_mutex_t *mutex);
+void create_threads(t_data *data,pthread_t *philo,pthread_mutex_t *forks);
+void	wait_threads(t_data data, pthread_t *philos);
+void	my_sleep(useconds_t time);
+void	write_action(t_data *data, char *s);
+void  ft_eating(t_data *data);
+void  check_philo_death(t_data *data);
 
 #endif

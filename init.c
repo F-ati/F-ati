@@ -64,9 +64,9 @@ void  set_char_data(t_data *data,pthread_mutex_t *mutex)
     p1 = malloc (sizeof(int));
     p2 = malloc(sizeof(int));
     p3 = malloc(sizeof(int));
-    *p1 = 3;
-    *p2 = 3;
-    *p3 = 3;
+    *p1 = 0;
+    *p2 = 0;
+    *p3 = 0;
     i = 0;
     while(i < data->philo_nb)
     {
@@ -94,4 +94,27 @@ void initialize_data(t_data *data,char **av , int ac ,pthread_mutex_t *mutex)
         i++;
     }
 
+}
+
+int  initialize_mutex(t_data *data,pthread_mutex_t *forks,pthread_mutex_t *mutex)
+{
+    int i;
+
+    i = 0;
+
+    if(pthread_mutex_init(mutex,NULL) != 0)
+    {
+        printf("Error initializing mutex\n");
+        return(-1);
+    }
+    while(i < data->philo_nb)
+    {
+        if(pthread_mutex_init(&forks[i],NULL) != 0)
+        {
+            printf("Error initializing mutex\n");
+            return(-1);
+        }
+        i++;
+    }
+    return(1);
 }
