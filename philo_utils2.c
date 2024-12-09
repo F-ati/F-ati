@@ -6,10 +6,9 @@
 /*   By: fel-aziz <fel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 22:24:45 by root              #+#    #+#             */
-/*   Updated: 2024/12/09 14:19:11 by fel-aziz         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:07:45 by fel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philo.h"
 
@@ -18,6 +17,7 @@ long	get_timestamp_in_ms(struct timeval start_time)
 	long			start_ms;
 	long			current_ms;
 	struct timeval	current_time;
+
 	gettimeofday(&current_time, NULL);
 	current_ms = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
 	start_ms = start_time.tv_sec * 1000 + start_time.tv_usec / 1000;
@@ -34,7 +34,7 @@ void	free_data(t_data *data, pthread_mutex_t *forks, pthread_t *philos)
 	free(data);
 }
 
-void	  destroy_mutexes(t_data data, pthread_mutex_t *forks,
+void	destroy_mutexes(t_data data, pthread_mutex_t *forks,
 		pthread_mutex_t *mutex)
 {
 	int	i;
@@ -67,20 +67,4 @@ void	write_action(t_data *data, char *s)
 		printf("%ld %d %s\n", get_timestamp_in_ms(data->start_time),
 			data->philo_id, s);
 	pthread_mutex_unlock(data->multi_lock);
-}
-
-void	my_sleep(useconds_t time)
-{
-	useconds_t		t;
-	struct timeval	start;
-	long			current_time;
-
-	t = time * 1000;
-	current_time = 0;
-	gettimeofday(&start, NULL);
-	while (current_time * 1000 < t)
-	{
-		usleep(50);
-		current_time = get_timestamp_in_ms(start);
-	}
 }

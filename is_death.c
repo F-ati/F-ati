@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   is_death.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: fel-aziz <fel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-08 22:06:22 by root              #+#    #+#             */
-/*   Updated: 2024-12-08 22:06:22 by root             ###   ########.fr       */
+/*   Created: 2024/12/08 22:06:22 by root              #+#    #+#             */
+/*   Updated: 2024/12/09 15:56:44 by fel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 int	check_meals(t_data *data, int *i)
 {
 	if (data[*i].args.time_must_eat != 0
@@ -47,18 +48,19 @@ int	check_death(t_data *data)
 	}
 	return (0);
 }
-void  check_philo_death(t_data *data)
+
+void	check_philo_death(t_data *data)
 {
-    while(1)
-    {
-        pthread_mutex_lock(data->multi_lock);
+	while (1)
+	{
+		pthread_mutex_lock(data->multi_lock);
 		if (*data->error_occured)
 		{
 			pthread_mutex_unlock(data->multi_lock);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(data->multi_lock);
 		if (check_death(data))
-			break;
-    }
+			break ;
+	}
 }
