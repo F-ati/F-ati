@@ -6,7 +6,7 @@
 /*   By: fel-aziz <fel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:34:12 by root              #+#    #+#             */
-/*   Updated: 2024/11/26 16:27:53 by fel-aziz         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:00:28 by fel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int verify_args(int ac , char *av[])
 
         i++;
     }
-    if(arr[0] < 0 || arr[0] >= 2000)
+    if(arr[0] < 0 || arr[0] >= 200)
     {
+        
         printf("philo: invalid input: %d: The number of philosophers must be less than 201.\n" ,arr[0]);
         return(-7);
     }
@@ -58,7 +59,6 @@ int main(int ac , char *av[])
         return(1);
     if (allocate_data(&forks,&philo,&data , av) == -1)
     {
-        // move the all malloc her;
         printf("Error: Memory allocation failed\n");
         return(1);
     }

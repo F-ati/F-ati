@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: fel-aziz <fel-aziz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-05 22:24:45 by root              #+#    #+#             */
-/*   Updated: 2024-12-05 22:24:45 by root             ###   ########.fr       */
+/*   Created: 2024/12/05 22:24:45 by root              #+#    #+#             */
+/*   Updated: 2024/12/09 14:19:11 by fel-aziz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 #include "philo.h"
 
 long	get_timestamp_in_ms(struct timeval start_time)
