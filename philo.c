@@ -28,7 +28,7 @@ void  ft_eating(t_data *data)
     my_sleep(data->args.time_to_eat);
     pthread_mutex_lock(data->multi_lock);
 	*data->eat_count = *data->eat_count + 1;
-    	data->last_meal_time = get_timestamp_in_ms(data->start_time);
+    data->last_meal_time = get_timestamp_in_ms(data->start_time);
 	pthread_mutex_unlock(data->multi_lock);
 	pthread_mutex_unlock(data->left_fork);
 	pthread_mutex_unlock(data->right_fork);
